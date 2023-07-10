@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Runner</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+    <header>
+        <h1>Code Runner</h1>
+        <button type="button" id="play-pause-btn">Play</button>
+        <button id="help-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Instructions</button>
+        <input id="enter-player-name" type="text" placeholder="Enter Name...">
+        <h3 id="player-name"></h3>
+    </header>
+    <main>
+      <section id="game-board">
+        <span id="bg-layers"></span>  
+          <div class="obstacles"></div>  
+          <h3>Score: <span id="score">0</span></h3>  
+          <h3 class="high-score">HiScore: <span id="high-score">0</span></h3>
+          <div id="ninja-idle"><img src="media/ninja-idle.gif" alt="ninja"></div>
+          
+          <div id="ninja-running"><img src="media/ninja-running.gif" alt="ninja running"></div>
+          
+          <div id="ninja-jumping"><img src="images/ninja-jumping.png" alt="ninja jumping"></div> 
+
+          <div id="ninja-dead"><img src="images/ninja-dead.png" alt="ninja jumping"></div> 
+        </section>
+        <!-- Modals -->
+        <section>
+          <!-- Instructions modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="staticBackdropLabel">Gameplay Instructions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>With your katana by your side, slice and dodge the incoming obstacles!</p><br/>
+                      <p>-Press <strong>Spacebar</strong> to jump</p>
+                      <p>-Press <strong>Shift</strong> to slice</p>
+                  </div>
+                  <div class="modal-footer">
+                    <p><strong>*WARNING*</strong> you <strong>cannot</strong> pause once the game has started. Mwuahaha</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Game Over modal -->
+            <div class="modal fade" id="gameOverModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="staticBackdropLabel">Game Over!</h5>
+                  </div>
+                  <div class="modal-body">
+                    <p>Your score is <strong><span id="game-over-score"></span></strong></p>
+                    <p>A valiant effort! Care to try again?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="play-again-btn">Play Again</button>
+                    <button type="button" class="btn btn-secondary" id="quit-btn">Quit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; Josh Esteban 2023</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script src ="./scripts/script.js"></script>
+</body>
+</html>
+
+
+
+
+

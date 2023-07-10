@@ -1,0 +1,126 @@
+
+@font-face {
+    font-family: 'Retro Sans';
+    src: url('../fonts/retro_computer_personal_use.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 46.875rem;
+}
+
+h1, h3 {
+    font-family: 'Retro Sans', Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    margin: 2.5rem 0;
+}
+
+h3 {
+    margin: 0;
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
+input {
+    border: 1px solid black;
+}
+
+.high-score {
+    position: absolute;
+    left: 0;
+    top: 1.875rem;
+}
+
+button, footer, input {
+    font-size: 1.3rem;
+    margin: 0.5rem;
+}
+
+footer {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+main {
+    overflow: hidden;
+    position: relative;
+}
+
+
+#bg-layers {
+    margin: 0 auto;
+    background-image: url(/images/road.svg);
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-repeat: repeat-x;
+    position: absolute;
+    left: 0;
+    top: 20rem;
+    width: 93.75rem;
+    height: 5.625rem;   
+}
+
+#game-board {
+    width: 46.875rem;
+    height: 27.5rem;
+    margin: 1rem auto 0;
+    background-color: rgb(235, 235, 235);
+    position: relative;
+}
+
+
+#ninja-idle {
+    position: absolute; 
+    bottom: 40px;
+    width: 75px;
+    height: 85px;
+    right: calc(100% - 105px);
+}
+
+#ninja-running {
+    position: absolute; 
+    bottom: 40px;
+    right: calc(100% - 90px);
+    width: 115px;
+    height: 85px;
+    left: 20px;
+    display: none;
+}
+
+#ninja-jumping {
+    position: absolute; 
+    bottom: 40px;
+    right: calc(100% - 110px); 
+    width: 85px;
+    height: 90px;
+    display: none;
+}
+
+#ninja-dead {
+    position: absolute; 
+    bottom: 40px;
+    right: calc(100% - 110px); 
+    width: 85px;
+    height: 90px;
+    display: none;
+}
+
+.obstacle {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    width: 30px;
+    height: 80px;
+    background-color: black;
+}
+
+
