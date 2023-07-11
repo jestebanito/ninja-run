@@ -56,18 +56,17 @@ enablePlayButton: () =>{
 
 reset: () => {
     game.toggleIsRunning();
+    game.obstacleSpeed = 5;
     $(".obstacle").remove();
     $("#ninja-running").show();
     $("#ninja-idle").hide();
     $("#ninja-dead").hide();
     $("#gameOverModal").modal("hide");
-        // $('#score').text(game.score);
     $('#high-score').text(game.hiScore);
     game.loopDuration;
     clearInterval(game.bgInterval);
-    clearTimeout(game.obstacleTimeout);
     clearInterval(game.obstacleInterval);
-    game.obstacleSpeed = 5;
+    clearTimeout(game.obstacleTimeout);
     game.moveBackground();
     game.generateObstacle();
     game.score = 0;
@@ -95,7 +94,7 @@ generateObstacle: () => {
     obstacle.setAttribute('class', 'obstacle');
     obstacles.appendChild(obstacle);
     
-    let randomTimeout = Math.floor(Math.random() * 1500) + 800;
+    let randomTimeout = Math.floor(Math.random() * 1500) + 500;
     let obstacleRight = -20;
     let obstacleBottom = 40;
     let obstacleWidth = 30;
@@ -171,8 +170,14 @@ function moveObstacle() {
         }
         if (game.score >= 800) {
             game.obstacleSpeed = 12;
-        } else if (game.score >800) {
-            game.obstacleSpeed = 12;
+        }
+        if (game.score >= 900) {
+            game.obstacleSpeed = 13;
+        }
+        if (game.score >= 1000) {
+            game.obstacleSpeed = 14;
+        } else if (game.score >1000) {
+            game.obstacleSpeed = 14;
         }
     }
 },
