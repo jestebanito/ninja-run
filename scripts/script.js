@@ -56,17 +56,14 @@ enablePlayButton: () =>{
 
 reset: () => {
     game.toggleIsRunning();
-    game.obstacleSpeed = 5;
     $(".obstacle").remove();
     $("#ninja-running").show();
     $("#ninja-idle").hide();
     $("#ninja-dead").hide();
     $("#gameOverModal").modal("hide");
     $('#high-score').text(game.hiScore);
-    game.loopDuration;
-    clearInterval(game.bgInterval);
-    clearInterval(game.obstacleInterval);
-    clearTimeout(game.obstacleTimeout);
+    // game.obstacleSpeed = 5;
+    // game.loopDuration;
     game.moveBackground();
     game.generateObstacle();
     game.score = 0;
@@ -94,7 +91,7 @@ generateObstacle: () => {
     obstacle.setAttribute('class', 'obstacle');
     obstacles.appendChild(obstacle);
     
-    let randomTimeout = Math.floor(Math.random() * 1500) + 500;
+    let randomTimeout = Math.floor(Math.random() * 1500) + 600;
     let obstacleRight = -20;
     let obstacleBottom = 40;
     let obstacleWidth = 30;
@@ -107,6 +104,40 @@ function moveObstacle() {
     obstacle.style.width = obstacleWidth + 'px';
     obstacle.style.height = obstacleHeight + 'px';
         
+    // Incrementing Speed of Game every 100 Points
+    if (game.isRunning) {
+        if (game.score < 100) {
+            game.obstacleSpeed = 5;
+        } 
+        if (game.score >= 100) {
+            game.obstacleSpeed = 6;
+        } 
+        if (game.score >= 200) {
+            game.obstacleSpeed = 7;
+        } 
+        if (game.score >= 300) {
+            game.obstacleSpeed = 8;
+        } 
+        if (game.score >= 400) {
+            game.obstacleSpeed = 9;
+        } 
+        if (game.score >= 500) {
+            game.obstacleSpeed = 10;
+        } 
+        if (game.score >= 600) {
+            game.obstacleSpeed = 11;
+        } 
+        if (game.score >= 700) {
+            game.obstacleSpeed = 12;
+        } 
+        if (game.score >= 800) {
+            game.obstacleSpeed = 13;
+        } 
+        if (game.score >= 900) {
+            game.obstacleSpeed = 14;
+        } 
+    }
+
     let ninjaRunRight = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('right'));
     let ninjaRunWidth = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('width'));
     let ninjaRunHeight = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('height'));
@@ -142,44 +173,6 @@ function moveObstacle() {
     game.obstacleInterval = setInterval(moveObstacle, game.loopDuration);
     game.obstacleTimeout = setTimeout(game.generateObstacle, randomTimeout);
     
-        // Incrementing Speed of Game every 100 Points
-    if (game.isRunning) {
-        if  (game.score < 100) {
-            game.obstacleSpeed = 5;
-        }
-        if (game.score >= 100) {
-            game.obstacleSpeed = 6;
-        }
-        if (game.score >= 200) {
-            game.obstacleSpeed = 7;
-        } 
-        if (game.score >= 300) {
-            game.obstacleSpeed = 8;
-        }
-        if (game.score >= 400) {
-            game.obstacleSpeed = 9;
-        }
-        if (game.score >= 500) {
-            game.obstacleSpeed = 10;
-        }
-        if (game.score >= 600) {
-            game.obstacleSpeed = 11;
-        }
-        if (game.score >= 700) {
-            game.obstacleSpeed = 12;
-        }
-        if (game.score >= 800) {
-            game.obstacleSpeed = 12;
-        }
-        if (game.score >= 900) {
-            game.obstacleSpeed = 13;
-        }
-        if (game.score >= 1000) {
-            game.obstacleSpeed = 14;
-        } else if (game.score >1000) {
-            game.obstacleSpeed = 14;
-        }
-    }
 },
 
 
