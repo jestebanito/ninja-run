@@ -11,7 +11,6 @@ const game = {
     helpButtonPressed: false,
     gameOverSound: new Audio('audio/ninja-dead.mp3'),
     speedUpSound: new Audio('audio/speed-up-sound.mp3'),
-    
 
 showScore: () => {
     game.score++;
@@ -207,8 +206,7 @@ function moveObstacle() {
 }
 
 game.obstacleInterval = setInterval(moveObstacle, game.loopDuration);
-game.obstacleTimeout = setTimeout(game.generateObstacle, randomTimeout);
-    
+game.obstacleTimeout = setTimeout(game.generateObstacle, randomTimeout);   
 },
 
 
@@ -224,6 +222,7 @@ init: () => {
     $("#help-btn").on('click', () => {
       if (!game.isRunning && !game.helpButtonPressed) {
           game.helpButtonPressed = true;
+          
           game.enablePlayButton();
         }
     });
@@ -325,6 +324,7 @@ init: () => {
 $(document).ready(function() {
     game.init();
     player.init();
+    $('#splash-screen').get(0).play();
 });
 
 
