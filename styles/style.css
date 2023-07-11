@@ -43,6 +43,15 @@ button, footer, input {
     margin: 0.5rem;
 }
 
+#player-name {
+    margin-top: .5rem;
+    padding: 0;
+}
+
+input {
+    width: 12rem;
+}
+
 footer {
     font-weight: bold;
     display: flex;
