@@ -105,6 +105,7 @@ function moveObstacle() {
     obstacle.style.height = obstacleHeight + 'px';
         
     // Incrementing Speed of Game every 100 Points
+    // I placed these if statements here other wise there would be a delay  
     if (game.isRunning) {
         if (game.score < 100) {
             game.obstacleSpeed = 5;
