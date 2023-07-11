@@ -9,6 +9,9 @@ const game = {
     score: 0,
     hiScore: 0,
     helpButtonPressed: false,
+    gameOverSound: new Audio('audio/ninja-dead.mp3'),
+    speedUpSound: new Audio('audio/speed-up-sound.mp3'),
+    
 
 showScore: () => {
     game.score++;
@@ -62,15 +65,13 @@ reset: () => {
     $("#ninja-dead").hide();
     $("#gameOverModal").modal("hide");
     $('#high-score').text(game.hiScore);
-    // game.obstacleSpeed = 5;
-    // game.loopDuration;
     game.moveBackground();
     game.generateObstacle();
     game.score = 0;
 
         // Resets the Jump Function
-    clearInterval(player.ninjaJump.timerUpId);
-    clearInterval(player.ninjaJump.timerDownId);
+    // clearInterval(player.ninjaJump.timerUpId);
+    // clearInterval(player.ninjaJump.timerDownId);
     player.ninjaJump.isJumping = false;
 },
 
@@ -105,10 +106,9 @@ function moveObstacle() {
     obstacle.style.height = obstacleHeight + 'px';
         
     // Incrementing Speed of Game every 100 Points
-    // I placed these if statements here other wise there would be a delay  
     if (game.isRunning) {
         if (game.score < 100) {
-            game.obstacleSpeed = 5;
+            game.obstacleSpeed = 5; 
         } 
         if (game.score >= 100) {
             game.obstacleSpeed = 6;
@@ -137,12 +137,45 @@ function moveObstacle() {
         if (game.score >= 900) {
             game.obstacleSpeed = 14;
         } 
-    }
 
+        // if (game.isRunning) {
+        //     if (game.score = 100) {
+        //     game.speedUpSound.play();
+        //     } 
+        //     if (game.score = 200) {
+        //     game.speedUpSound.play();
+        //     } 
+        //     if (game.score = 300) {
+        //     game.speedUpSound.play();
+        //     } 
+        //     if (game.score = 400) {
+        //     game.speedUpSound.play();
+        //     } 
+        //     if (game.score = 500) {
+        //     game.speedUpSound.play();;
+        //     } 
+        //     if (game.score = 600) {
+        //     game.speedUpSound.play();;
+        //     } 
+        //     if (game.score = 700) {
+        //     game.speedUpSound.play();;
+        //     } 
+        //     if (game.score = 800) {
+        //     game.speedUpSound.play();;
+        //     } 
+        //     if (game.score = 900) {
+        //     game.speedUpSound.play();;
+        //     } 
+        // }
+
+
+    }
+        // Calling and Finding Width, Height and Right Side of Ninja Running 
     let ninjaRunRight = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('right'));
     let ninjaRunWidth = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('width'));
     let ninjaRunHeight = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('height'));
-    
+
+        // Calling and Finding Width, Height, Bottom and Right Side of Ninja Jumping
     let ninjaJumpBottom = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('bottom'));
     let ninjaJumpRight = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('right'));
     let ninjaJumpWidth = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('width'));
@@ -153,13 +186,15 @@ function moveObstacle() {
         (ninjaRunRight >= obstacleRight - ninjaRunWidth) && (ninjaRunRight <= obstacleRight + obstacleWidth) && (ninjaRunHeight >= obstacleBottom) ||
         (ninjaJumpRight >= obstacleRight - ninjaJumpWidth) && (ninjaJumpRight <= obstacleRight + obstacleWidth) && (ninjaJumpBottom <= obstacleBottom + obstacleHeight) && (ninjaJumpBottom + ninjaJumpHeight >= obstacleBottom)
     ) {
+        console.log('Collision detected');
+        game.gameOverSound.play();
+        clearInterval(game.obstacleInterval);
+        clearTimeout(game.obstacleTimeout);
+        clearInterval(game.bgInterval);
         $("#ninja-dead").show();
         $("#ninja-running").hide();
         $("#gameOverModal").modal("show");
         $("#game-over-score").text(game.score);
-        clearInterval(game.bgInterval);
-        clearInterval(game.obstacleInterval);
-        clearTimeout(game.obstacleTimeout);
         game.isRunning = false;
         // Stops incrementing Player Score
         clearInterval(game.displayScore);
@@ -171,8 +206,8 @@ function moveObstacle() {
     }
 }
 
-    game.obstacleInterval = setInterval(moveObstacle, game.loopDuration);
-    game.obstacleTimeout = setTimeout(game.generateObstacle, randomTimeout);
+game.obstacleInterval = setInterval(moveObstacle, game.loopDuration);
+game.obstacleTimeout = setTimeout(game.generateObstacle, randomTimeout);
     
 },
 
@@ -206,6 +241,8 @@ init: () => {
 };
 
 const player = {
+    jumpSound: new Audio('audio/ninja-jump.mp3'),
+    gameOverSound: new Audio('audio/ninja-dead.mp3'),
     playerForm: document.getElementById("enter-player-name"),
     playerName: document.getElementById("player-name"),
     name: "",
@@ -242,13 +279,15 @@ jump: function() {
     player.ninjaJumpBottom = player.ninjaJumpBottom * player.gravity;
     player.ninjaJump.style.bottom = player.ninjaJumpBottom + 'px';
 }, 20); 
+    // Jumping Sound Effect
+    player.jumpSound.play();   
 }, 
     
 control: function(e) {
     if (e.key === " ") {
         e.preventDefault(); 
         if (game.isRunning){
-            player.jump();        
+            player.jump(); 
         }
     }
 },
