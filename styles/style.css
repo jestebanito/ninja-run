@@ -37,6 +37,7 @@ input {
     left: 0;
     top: 1.875rem;
 }
+
 a {
     text-decoration: none;
 }
@@ -44,6 +45,17 @@ a {
 button, footer, input {
     font-size: 1.3rem;
     margin: 0.5rem;
+}
+
+p {
+    margin: 1.2rem 0;
+}
+
+.ps {
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0;
 }
 
 #player-name {
@@ -66,7 +78,6 @@ main {
     overflow: hidden;
     position: relative;
 }
-
 
 #bg-road {
     margin: 0 auto;

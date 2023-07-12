@@ -269,7 +269,7 @@ jump: function() {
     if (player.ninjaJump.isJumping) return;
     
     player.ninjaJump.timerUpId = setInterval(() => {
-        if (player.ninjaJumpBottom > 230) {    
+        if (player.ninjaJumpBottom > 225) {    
             clearInterval(player.ninjaJump.timerUpId); 
             player.ninjaJump.timerDownId = setInterval(() => {
             if (player.ninjaJumpBottom <= 40) {
