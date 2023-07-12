@@ -120,7 +120,7 @@ main {
 #ninja-dead {
     position: absolute; 
     bottom: 40px;
-    right: calc(100% - 110px); 
+    right: calc(100% - 110px);
     width: 85px;
     height: 90px;
     display: none;

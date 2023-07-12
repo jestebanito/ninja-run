@@ -162,10 +162,9 @@ function moveObstacle() {
             }
         } 
     }
-        // Calling and Finding Width, Height and Right Side of Ninja Running 
+        // Calling and Finding Width and Right Side of Ninja Running 
     let ninjaRunRight = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('right'));
     let ninjaRunWidth = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('width'));
-    let ninjaRunHeight = parseInt(window.getComputedStyle(document.querySelector("#ninja-running")).getPropertyValue('height'));
 
         // Calling and Finding Width, Height, Bottom and Right Side of Ninja Jumping
     let ninjaJumpBottom = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('bottom'));
@@ -173,28 +172,35 @@ function moveObstacle() {
     let ninjaJumpWidth = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('width'));
     let ninjaJumpHeight = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('height'));
 
-        // Collision Detection when Ninja is Running || Ninja is Jumping
+        // Collision Detection if Ninja is Running || if Ninja is Jumping
     if (
-        (ninjaRunRight >= obstacleRight - ninjaRunWidth) && (ninjaRunRight <= obstacleRight + obstacleWidth) && (ninjaRunHeight >= obstacleBottom) ||
+        (ninjaRunRight >= obstacleRight - ninjaRunWidth) && (ninjaRunRight <= obstacleRight + obstacleWidth) 
+        ||
         (ninjaJumpRight >= obstacleRight - ninjaJumpWidth) && (ninjaJumpRight <= obstacleRight + obstacleWidth) && (ninjaJumpBottom <= obstacleBottom + obstacleHeight) && (ninjaJumpBottom + ninjaJumpHeight >= obstacleBottom)
     ) {
         console.log('Collision detected');
+        game.isRunning = false;
         game.gameOverSound.play();
+        clearInterval(player.ninjaJump.timerUpId);
+        clearInterval(player.ninjaJump.timerDownId);
         clearInterval(game.obstacleInterval);
         clearTimeout(game.obstacleTimeout);
         clearInterval(game.bgInterval);
-        $("#ninja-dead").show();
-        $("#ninja-running").hide();
-        $("#gameOverModal").modal("show");
-        $("#game-over-score").text(game.score);
-        game.isRunning = false;
         // Stops incrementing Player Score
         clearInterval(game.displayScore);
+        $("#game-over-score").text(game.score);
+        $("#gameOverModal").modal("show");
+        
         if (player.ninjaJump.isJumping) {
-            clearInterval(player.ninjaJump.timerUpId);
-            clearInterval(player.ninjaJump.timerDownId);
-            $("#ninja-dead").hide();
-        }
+            $("#ninja-jumping").hide();
+            $("#ninja-dead").show().css({
+                right: ninjaJumpRight + "px",
+                bottom: ninjaJumpBottom + "px",
+            });
+        } else {
+            $("#ninja-running").hide();
+            $("#ninja-dead").show()
+        } 
     }
 }
 game.obstacleInterval = setInterval(moveObstacle, game.loopDuration);
