@@ -85,7 +85,7 @@ main {
 
 #bg-road {
     margin: 0 auto;
-    background-image: url(./images/road.svg);
+    background-image: url(../images/road.svg);
     background-position-x: 0px;
     background-position-y: 0px;
     background-repeat: repeat-x;
@@ -97,7 +97,7 @@ main {
 }
 
 #bg-clouds {
-    background-image: url(./images/clouds.svg);
+    background-image: url(../images/clouds.svg);
     background-position-x: 0px;
     background-position-y: 0px;
     background-repeat: repeat-x;
