@@ -93,7 +93,7 @@ generateObstacle: () => {
     let obstacleRight = -20;
     let obstacleBottom = 40;
     let obstacleWidth = 30;
-    let obstacleHeight = Math.floor(Math.random() * 51) + 50;
+    let obstacleHeight = Math.floor(Math.random() * 41) + 60;
     
 function moveObstacle() {
     obstacleRight += game.obstacleSpeed;
