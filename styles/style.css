@@ -68,7 +68,7 @@ main {
 }
 
 
-#bg-layers {
+#bg-road {
     margin: 0 auto;
     background-image: url(/images/road.svg);
     background-position-x: 0px;
@@ -76,9 +76,21 @@ main {
     background-repeat: repeat-x;
     position: absolute;
     left: 0;
-    top: 20rem;
-    width: 93.75rem;
-    height: 5.625rem;   
+    top: 320px;
+    width: 1500px;
+    height: 90px;   
+}
+
+#bg-clouds {
+    background-image: url(/images/clouds.svg);
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-repeat: repeat-x;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 2000px;
+    height: 130px;
 }
 
 #game-board {
@@ -118,6 +130,15 @@ main {
 }
 
 #ninja-dead {
+    position: absolute; 
+    bottom: 40px;
+    right: calc(100% - 110px);
+    width: 85px;
+    height: 90px;
+    display: none;
+}
+
+#ninja-dead-run {
     position: absolute; 
     bottom: 40px;
     right: calc(100% - 110px);

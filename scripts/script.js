@@ -5,7 +5,8 @@ const game = {
     isRunning: false,
     loopDuration: 700 / 60,
     bgPositionX: 0,
-    obstacleSpeed: 6,
+    cloudPositionX: 0,
+    obstacleSpeed: 5,
     score: 0,
     hiScore: 0,
     helpButtonPressed: false,
@@ -34,7 +35,7 @@ toggleIsRunning: () => {
     }
 },
 
-enablePlayButton: () =>{
+enablePlayButton: () => {
     $("#play-pause-btn").show();
     $("#play-pause-btn").on('click', () => {
     game.toggleIsRunning();
@@ -58,12 +59,14 @@ enablePlayButton: () =>{
     });
 },
 
+
 reset: () => {
     game.toggleIsRunning();
     $(".obstacle").remove();
     $("#ninja-running").show();
     $("#ninja-idle").hide();
     $("#ninja-dead").hide();
+    $("#ninja-dead-run").hide();
     $("#gameOverModal").modal("hide");
     $('#high-score').text(game.hiScore);
     game.moveBackground();
@@ -72,13 +75,19 @@ reset: () => {
     player.ninjaJump.isJumping = false;
 },
 
+moveClouds: () =>{
+    game.cloudInterval = setInterval(() =>{
+            game.cloudPositionX -= 0.25;
+          $('#bg-clouds').css('background-position-x', game.cloudPositionX + 'px');
+    }, game.loopDuration);
+  },
 
 moveBackground: () => {
     game.bgInterval = setInterval(() => {
         if (game.isRunning) {
         // Matches Background Speed with Obstacle Speed
         game.bgPositionX -= game.obstacleSpeed;
-        $("#bg-layers").css("background-position-x", game.bgPositionX + "px");
+        $("#bg-road").css("background-position-x", game.bgPositionX + "px");
         }
     }, game.loopDuration);
 },
@@ -89,7 +98,7 @@ generateObstacle: () => {
     obstacle.setAttribute('class', 'obstacle');
     obstacles.appendChild(obstacle);
     
-    let randomTimeout = Math.floor(Math.random() * 1500) + 600;
+    let randomTimeout = Math.floor(Math.random() * 1500) + 700;
     let obstacleRight = -20;
     let obstacleBottom = 40;
     let obstacleWidth = 30;
@@ -105,59 +114,65 @@ function moveObstacle() {
     // Incrementing Speed of Game every 100 Points
     if (game.isRunning) {
         if (game.score < 100) {
-            game.obstacleSpeed = 6; 
+            game.obstacleSpeed = 5; 
         } 
         if (game.score >= 100) {
-            game.obstacleSpeed = 7;
+            game.obstacleSpeed = 6;
             if (game.score === 100) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 200) {
-            game.obstacleSpeed = 8;
+            game.obstacleSpeed = 7;
             if (game.score === 200) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 300) {
-            game.obstacleSpeed = 9;
+            game.obstacleSpeed = 8;
             if (game.score === 300) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 400) {
-            game.obstacleSpeed = 10;
+            game.obstacleSpeed = 9;
             if (game.score === 400) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 500) {
-            game.obstacleSpeed = 11;
+            game.obstacleSpeed = 10;
             if (game.score === 500) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 600) {
-            game.obstacleSpeed = 12;
+            game.obstacleSpeed = 11;
             if (game.score === 600) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 700) {
-            game.obstacleSpeed = 13;
+            game.obstacleSpeed = 12;
             if (game.score === 700) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 800) {
-            game.obstacleSpeed = 14;
+            game.obstacleSpeed = 13;
             if (game.score === 800) {
                 game.speedUpSound.play();
             }
         } 
         if (game.score >= 900) {
-            game.obstacleSpeed = 15;
+            game.obstacleSpeed = 14;
             if (game.score === 900) {
+                game.speedUpSound.play();
+            }
+        } 
+        if (game.score >= 1000) {
+            game.obstacleSpeed = 15;
+            if (game.score === 1000) {
                 game.speedUpSound.play();
             }
         } 
@@ -174,7 +189,7 @@ function moveObstacle() {
 
         // Collision Detection if Ninja is Running || if Ninja is Jumping
     if (
-        (ninjaRunRight >= obstacleRight - ninjaRunWidth) && (ninjaRunRight <= obstacleRight + obstacleWidth) 
+        (ninjaRunRight >= obstacleRight - ninjaRunWidth) && (ninjaRunRight <= obstacleRight + obstacleWidth)
         ||
         (ninjaJumpRight >= obstacleRight - ninjaJumpWidth) && (ninjaJumpRight <= obstacleRight + obstacleWidth) && (ninjaJumpBottom <= obstacleBottom + obstacleHeight) && (ninjaJumpBottom + ninjaJumpHeight >= obstacleBottom)
     ) {
@@ -186,11 +201,11 @@ function moveObstacle() {
         clearInterval(game.obstacleInterval);
         clearTimeout(game.obstacleTimeout);
         clearInterval(game.bgInterval);
-        // Stops incrementing Player Score
         clearInterval(game.displayScore);
         $("#game-over-score").text(game.score);
         $("#gameOverModal").modal("show");
-        
+
+        // Bugs would occur if I used the same image if there is a collision detected when jumping or running so I made 2 identical images
         if (player.ninjaJump.isJumping) {
             $("#ninja-jumping").hide();
             $("#ninja-dead").show().css({
@@ -199,7 +214,7 @@ function moveObstacle() {
             });
         } else {
             $("#ninja-running").hide();
-            $("#ninja-dead").show()
+            $("#ninja-dead-run").show()
         } 
     }
 }
@@ -241,7 +256,7 @@ const player = {
     name: "",
     ninjaJump: document.querySelector("#ninja-jumping"),
     ninjaJumpBottom: parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('bottom')),
-
+    
     gravity: 0.9,
     isJumping: false,
     timerUpId: null,
@@ -254,7 +269,7 @@ jump: function() {
     if (player.ninjaJump.isJumping) return;
     
     player.ninjaJump.timerUpId = setInterval(() => {
-        if (player.ninjaJumpBottom > 220) {    
+        if (player.ninjaJumpBottom > 230) {    
             clearInterval(player.ninjaJump.timerUpId); 
             player.ninjaJump.timerDownId = setInterval(() => {
             if (player.ninjaJumpBottom <= 40) {
@@ -318,6 +333,7 @@ init: () => {
 $(document).ready(function() {
     game.init();
     player.init();
+    game.moveClouds();
 });
 
 

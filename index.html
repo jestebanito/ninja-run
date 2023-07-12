@@ -26,7 +26,8 @@
     <main>
       <audio id="speed-up-sound" src="audio/speed-up-sound.mp3"></audio>
       <section id="game-board">
-        <span id="bg-layers"></span>  
+        <span id="bg-clouds"></span> 
+        <span id="bg-road"></span>  
         <div class="obstacles"></div>  
         <h3>Score: <span id="score">0</span></h3>  
         <h3 class="high-score">HiScore: <span id="high-score">0</span></h3>
@@ -35,8 +36,11 @@
         <div id="ninja-running"><img src="media/ninja-running.gif" alt="ninja running"></div>
         
         <div id="ninja-jumping"><img src="images/ninja-jumping.png" alt="ninja jumping"></div> 
-        
-        <div id="ninja-dead"><img src="images/ninja-dead.png" alt="ninja jumping"></div> 
+
+        <!-- Made 2 identical dead images to avoid bugs when collision is detected while ninja is jumping or while ninja is running-->
+        <div id="ninja-dead"><img src="images/ninja-dead.png" alt="ninja dead"></div> 
+
+        <div id="ninja-dead-run"><img src="images/ninja-dead-run.png" alt="ninja jumping 2"></div> 
       </section>
       <!-- Modals -->
       <section>
@@ -52,7 +56,7 @@
                     <p>Jump over the incoming obstacles!</p>
                       <p>-Press <strong>Spacebar</strong> to jump</p>
                       <!-- <p>-Press <strong>Shift</strong> to slice</p> -->
-                      <p>The sword is just a decoration. Will be acquired for later use</p>
+                      <p>The sword is just decoration. Might be acquired for later use</p>
                     </div>
                     <div class="modal-footer">
                       <p><strong>*WARNING*</strong> you <strong>cannot</strong> pause once the game has started. Mwuahaha</p>
@@ -68,7 +72,7 @@
                       <h5 class="modal-title fs-5" id="staticBackdropLabel">Game Over!</h5>
                     </div>
                     <div class="modal-body">
-                      <p>Your score is <strong><span id="game-over-score"></span></strong></p>
+                      <p>Your score is: <strong><span id="game-over-score"></span></strong></p>
                       <p>A valiant effort! Care to try again?</p>
                     </div>
                     <div class="modal-footer">
@@ -91,6 +95,7 @@
                       <strong><p>Ninja Sprite pulled from <a href="https://opengameart.org/content/ninja-animated">OpenGameArt</a>.org</p></strong>
                       <strong><p>Sound Effects pulled from <a href="https://pixabay.com/sound-effects/search/">Pixel</a>.com</p></strong>
                       <strong><p>Ninja Animation recreated in Adobe Photoshop</p></strong>
+                      <strong><p>Background images created in Adobe Illustrator</p></strong>
 
                     </div>
                     <div class="modal-footer">
