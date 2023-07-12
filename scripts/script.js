@@ -16,7 +16,6 @@ const game = {
 showScore: () => {
     game.score++;
     $('#score').text(game.score);
-
     if (game.score > game.hiScore) {
         game.hiScore = game.score;
         $('#high-score').text(game.hiScore);
@@ -75,6 +74,7 @@ reset: () => {
     player.ninjaJump.isJumping = false;
 },
 
+        // Setting Speed for Clouds Background
 moveClouds: () =>{
     game.cloudInterval = setInterval(() =>{
             game.cloudPositionX -= 0.25;
@@ -85,20 +85,21 @@ moveClouds: () =>{
 moveBackground: () => {
     game.bgInterval = setInterval(() => {
         if (game.isRunning) {
-        // Matches Background Speed with Obstacle Speed
+        // Matches Road Speed with Obstacle Speed
         game.bgPositionX -= game.obstacleSpeed;
         $("#bg-road").css("background-position-x", game.bgPositionX + "px");
         }
     }, game.loopDuration);
 },
 
+        // Function for Generating Obstacles
 generateObstacle: () => {
     let obstacles = document.querySelector('.obstacles');
     let obstacle = document.createElement('div');
     obstacle.setAttribute('class', 'obstacle');
     obstacles.appendChild(obstacle);
     
-    let randomTimeout = Math.floor(Math.random() * 1500) + 700;
+    let randomTimeout = Math.floor(Math.random() * 1500) + 750;
     let obstacleRight = -20;
     let obstacleBottom = 40;
     let obstacleWidth = 30;
@@ -111,7 +112,7 @@ function moveObstacle() {
     obstacle.style.width = obstacleWidth + 'px';
     obstacle.style.height = obstacleHeight + 'px';
         
-    // Incrementing Speed of Game every 100 Points
+        // Incrementing Speed of Game every 100 Points
     if (game.isRunning) {
         if (game.score < 100) {
             game.obstacleSpeed = 5; 
@@ -119,6 +120,7 @@ function moveObstacle() {
         if (game.score >= 100) {
             game.obstacleSpeed = 6;
             if (game.score === 100) {
+        // Audio Indicator for Increased Speed
                 game.speedUpSound.play();
             }
         } 
@@ -187,11 +189,15 @@ function moveObstacle() {
     let ninjaJumpWidth = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('width'));
     let ninjaJumpHeight = parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('height'));
 
-        // Collision Detection if Ninja is Running || if Ninja is Jumping
+        // Collision Detection when Ninja is Running || when Ninja is Jumping
     if (
-        (ninjaRunRight >= obstacleRight - ninjaRunWidth) && (ninjaRunRight <= obstacleRight + obstacleWidth)
+        (ninjaRunRight >= obstacleRight - ninjaRunWidth) && 
+        (ninjaRunRight <= obstacleRight + obstacleWidth)
         ||
-        (ninjaJumpRight >= obstacleRight - ninjaJumpWidth) && (ninjaJumpRight <= obstacleRight + obstacleWidth) && (ninjaJumpBottom <= obstacleBottom + obstacleHeight) && (ninjaJumpBottom + ninjaJumpHeight >= obstacleBottom)
+        (ninjaJumpRight >= obstacleRight - ninjaJumpWidth) && 
+        (ninjaJumpRight <= obstacleRight + obstacleWidth) && 
+        (ninjaJumpBottom <= obstacleBottom + obstacleHeight) && 
+        (ninjaJumpBottom + ninjaJumpHeight >= obstacleBottom)
     ) {
         console.log('Collision detected');
         game.isRunning = false;
@@ -205,7 +211,7 @@ function moveObstacle() {
         $("#game-over-score").text(game.score);
         $("#gameOverModal").modal("show");
 
-        // Bugs would occur if I used the same image if there is a collision detected when jumping or running so I made 2 identical images
+        // Bugs would occur if I used the same image for collision detection when jumping or running so I made 2 identical images
         if (player.ninjaJump.isJumping) {
             $("#ninja-jumping").hide();
             $("#ninja-dead").show().css({
@@ -223,7 +229,7 @@ game.obstacleTimeout = setTimeout(game.generateObstacle, randomTimeout);
 },
 
 init: () => {  
-        // Alert that says to Read Instructions First Before Playing 
+        // Alert to Read Instructions Before Playing 
     $("#play-pause-btn").on('click', () => {
         if (!game.isRunning && !game.helpButtonPressed) {
             alert('Read instructions first to continue!');
@@ -233,7 +239,7 @@ init: () => {
     $("#help-btn").on('click', () => {
       if (!game.isRunning && !game.helpButtonPressed) {
           game.helpButtonPressed = true;
-          
+        // Enables Play Button after Instructions are read
           game.enablePlayButton();
         }
     });
@@ -256,7 +262,7 @@ const player = {
     name: "",
     ninjaJump: document.querySelector("#ninja-jumping"),
     ninjaJumpBottom: parseInt(window.getComputedStyle(document.querySelector('#ninja-jumping')).getPropertyValue('bottom')),
-    
+        // Property for Gravity for a More Realistic Jump
     gravity: 0.9,
     isJumping: false,
     timerUpId: null,
@@ -269,7 +275,7 @@ jump: function() {
     if (player.ninjaJump.isJumping) return;
     
     player.ninjaJump.timerUpId = setInterval(() => {
-        if (player.ninjaJumpBottom > 225) {    
+        if (player.ninjaJumpBottom >= 225) {    
             clearInterval(player.ninjaJump.timerUpId); 
             player.ninjaJump.timerDownId = setInterval(() => {
             if (player.ninjaJumpBottom <= 40) {
@@ -287,10 +293,10 @@ jump: function() {
     player.ninjaJumpBottom = player.ninjaJumpBottom * player.gravity;
     player.ninjaJump.style.bottom = player.ninjaJumpBottom + 'px';
 }, 20); 
-    // Jumping Sound Effect
+        // Jumping Sound Effect
     player.jumpSound.play();   
 }, 
-    
+        // Event "Spacebar" Keydown Listener for when Ninja is Jumping
 control: function(e) {
     if (e.key === " ") {
         e.preventDefault(); 
@@ -299,14 +305,14 @@ control: function(e) {
         }
     }
 },
-    
+
 init: () => {
     document.addEventListener('keydown', (e) => {
         if (game.isRunning === true) { 
             player.control(e); 
         }
     });
-        // Press Enter Listener to Display Player Name  
+        // Event "Enter" Keydown Listener to Display Player Name  
     player.playerForm.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
             const nameValue = player.playerForm.value;
@@ -333,6 +339,7 @@ init: () => {
 $(document).ready(function() {
     game.init();
     player.init();
+        // Moves Clouds in the Background Independent of the game.isRunning State
     game.moveClouds();
 });
 
