@@ -10,8 +10,8 @@ const game = {
     score: 0,
     hiScore: 0,
     helpButtonPressed: false,
-    gameOverSound: new Audio('audio/ninja-dead.mp3'),
-    speedUpSound: new Audio('audio/speed-up-sound.mp3'),
+    gameOverSound: new Audio('./audio/ninja-dead.mp3'),
+    speedUpSound: new Audio('./audio/speed-up-sound.mp3'),
 
 showScore: () => {
     game.score++;
@@ -256,7 +256,7 @@ init: () => {
 };
 
 const player = {
-    jumpSound: new Audio('audio/ninja-jump.mp3'),
+    jumpSound: new Audio('./audio/ninja-jump.mp3'),
     playerForm: document.getElementById("enter-player-name"),
     playerName: document.getElementById("player-name"),
     name: "",
