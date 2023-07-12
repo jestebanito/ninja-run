@@ -312,6 +312,7 @@ init: () => {
             player.control(e); 
         }
     });
+    
         // Event "Enter" Keydown Listener to Display Player Name  
     player.playerForm.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
