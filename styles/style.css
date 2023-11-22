@@ -1,7 +1,7 @@
 
 @font-face {
     font-family: 'Retro Sans';
-    src: url('../fonts/retro_computer_personal_use.ttf') format('woff');
+    src: url('../fonts/retro_computer_personal_use.ttf');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

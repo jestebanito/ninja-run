@@ -41,7 +41,7 @@ enablePlayButton: () => {
     const nameValue = player.playerForm.value;
     if (nameValue !== "") {
       player.name = nameValue;
-      player.playerName.textContent = player.name;
+      player.playerName.textContent = player.name;  
     }
     $('#enter-player-name').hide();
 
@@ -278,7 +278,7 @@ jump: function() {
         if (player.ninjaJumpBottom >= 225) {    
             clearInterval(player.ninjaJump.timerUpId); 
             player.ninjaJump.timerDownId = setInterval(() => {
-            if (player.ninjaJumpBottom <= 40) {
+            if (player.ninjaJumpBottom <= 60) {
                 clearInterval(player.ninjaJump.timerDownId);
                 player.ninjaJump.isJumping = false;
                 $('#ninja-jumping').hide();
@@ -323,7 +323,7 @@ init: () => {
               $('#enter-player-name').hide();
             }
         }
-      });
+    });
 
     $('#play-pause-btn').on('click', () => {
         const nameValue = player.playerForm.value;
